@@ -1,11 +1,15 @@
 import Feature from "../components/Feature/Feature";
+import Footer from "../components/Footer/Footer";
 import NavBar from "../components/NavBar";
-import TwoPost from "../components/Post/TwoPost";
+import PostContainer from "../components/Post/PostContainer";
 
 export default function HomePage() {
-  return <>
-  <NavBar />
-  <Feature/>
-  <TwoPost/>
-  </>;
+  return (
+    <>
+      <NavBar />
+      <Feature />
+      <PostContainer />
+      <Footer />
+    </>
+  );
 }

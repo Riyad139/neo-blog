@@ -8,7 +8,7 @@ export default function Feature(props) {
   return (
     <Container>
       <div className="maindiv md:flex md:space-x-10 pt-16">
-        <div className="img  rounded-sm ">
+        <div className="img rounded-sm ">
           <Image
             className="rounded-md  object-cover"
             src="https://uploads-ssl.webflow.com/5f3fdb4ac2968afe2a89c98b/62bc215a2c6a8e775bf1f724_pixelmatters-power-written-communications-product-design-p-2000.png"
@@ -17,7 +17,7 @@ export default function Feature(props) {
             alt="pic"
           />
         </div>
-        <div className="content  w-[600px]">
+        <div className="content w-full  lg:max-w-lg">
           <div className="catagory ">
             <h1 className="  text-gray-500 ">
               <span className="font-bold text-base">Design</span>{" "}

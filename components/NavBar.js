@@ -42,7 +42,7 @@ export default function NavBar() {
             </div>
           </div>
         </div>
-        <div className=" hidden lg:flex space-x-3 items-center">
+        <div className=" hidden lg:flex space-x-9 items-center">
           <Link href="work">work</Link>
           <Link href="culture">culture</Link>
           <Link href="career">career</Link>
