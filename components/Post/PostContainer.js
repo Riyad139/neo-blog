@@ -93,7 +93,7 @@ const data = [
 export default function PostContainer(props) {
   return (
     <Container>
-      <div className="mainContainer py-10 flex gap-16  flex-wrap">
+      <div className="mainContainer py-10 flex   flex-wrap">
         <Post
           isTwoPost={true}
           name={data[0].userName}

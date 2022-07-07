@@ -4,6 +4,7 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { AiOutlineFacebook } from "react-icons/ai";
 import { AiOutlineLinkedin } from "react-icons/ai";
+import Link from "next/link";
 export default function Footer(props) {
   return (
     <div className="py-9 text-white  bg-slate-900 ">
@@ -20,15 +21,15 @@ export default function Footer(props) {
         <hr className="my-10 border-slate-600" />
         <div className="flex flex-col lg:flex-row justify-between ">
           <div className=" flex-col md:flex-row px-1 md:px-0 space-y-3 md:items-end md:space-y-0 flex md:space-x-5  ">
-            <h2 className="font-bold  text-2xl ">Neo Matters</h2>
-            <h2>Work</h2>
-            <h2>Culture</h2>
-            <h2>Careers</h2>
-            <h2>Blog</h2>
-            <h2>BrandMatters</h2>
-            <h2>Goodies</h2>
+            <Link href="#">Neo Matters</Link>
+            <Link href="#">Work</Link>
+            <Link href="#">Culture</Link>
+            <Link href="#">Careers</Link>
+            <Link href="#">Blog</Link>
+            <Link href="#">BrandMatters</Link>
+            <Link href="#">Goodies</Link>
           </div>
-          <div className="  md:flex-row pt-4 lg:pt-0 px-1  lg:px-0  flex space-x-5">
+          <div className="  md:flex-row md:item-end pt-4 lg:pt-0 px-1  lg:px-0  flex space-x-5">
             <AiOutlineGlobal size={26} />
             <AiOutlineInstagram size={26} />
             <AiOutlineFacebook size={26} />

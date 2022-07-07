@@ -1,0 +1,27 @@
+import Feature from "../components/Feature/Feature";
+import Footer from "../components/Footer/Footer";
+import NavBar from "../components/NavBar";
+import PostContainer from "../components/Post/PostContainer";
+import PostDetails from "./[postId]";
+
+
+
+export default function HomePage() {
+  return (
+    <>
+      {/* <NavBar />
+      <Feature />
+      <PostContainer />
+      <Footer /> */}
+      <PostDetails
+        img={data.img}
+        name={data.userName}
+        userPos={data.userPos}
+        tag={data.catagory}
+        title={data.title}
+        date={data.date}
+        description={data.description}
+      />
+    </>
+  );
+}
