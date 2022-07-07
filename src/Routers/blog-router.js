@@ -1,13 +1,10 @@
 const express = require("express");
-const { route } = require("../app");
 const blog = express.Router();
+const blogController = require("./../controllers/blogController");
 
-blog.route("/:blogId").get((req, res) => {
-  const id = req.params.blogId;
-  res.json({
-    massage: "success",
-    id,
-  });
-});
+blog
+  .route("/blog")
+  .get(blogController.getAll)
+  .post(blogController.createArticle);
 
 module.exports = blog;
