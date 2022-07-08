@@ -18,7 +18,7 @@ exports.getAllBlogs = async (req, res) => {
 
 exports.createArticle = async (req, res) => {
   try {
-    console.log(req.body);
+    
     const article = await articleModel.create(req.body);
 
     res.status(200).json({

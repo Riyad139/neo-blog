@@ -23,6 +23,10 @@ const schema = new mongoose.Schema({
     required: [true, "A blog must have a desc"],
     trim: true,
   },
+  tag: {
+    type: String,
+    default: "product",
+  },
   img: {
     type: String,
   },

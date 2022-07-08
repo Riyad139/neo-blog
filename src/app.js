@@ -2,10 +2,13 @@ const env = require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const cors = require("./../src/controllers/cors");
+app.use(cors);
 const port = 6565;
 const blog = require("./Routers/blog-router");
 app.use(express.json());
 app.use(blog);
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
