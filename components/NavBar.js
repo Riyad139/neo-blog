@@ -35,7 +35,7 @@ export default function NavBar() {
               <Link href="work">work</Link>
               <Link href="culture">culture</Link>
               <Link href="career">career</Link>
-              <Link href="blog">blog</Link>
+              <Link href="/">blog</Link>
               <button className="bg-white text-lg py-2 px-7 text-gray-800 rounded-full">
                 Get in touch
               </button>
@@ -46,7 +46,7 @@ export default function NavBar() {
           <Link href="work">work</Link>
           <Link href="culture">culture</Link>
           <Link href="career">career</Link>
-          <Link href="blog">blog</Link>
+          <Link href="/">blog</Link>
           <button className="bg-gray-800 text-sm py-2 px-6 text-white rounded-full">
             Get in touch
           </button>

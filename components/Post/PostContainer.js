@@ -1,8 +1,7 @@
 import Container from "../Layout/Container";
 import NextPage from "../util/NextPage";
 import Post from "./Post";
-const pic = "/post-img/post-1.jpg";
-const pic2 = "/post-img/post-2.png";
+
 
 const data = [
   {
@@ -93,7 +92,7 @@ const data = [
 export default function PostContainer(props) {
   return (
     <Container>
-      <div className="mainContainer py-10 flex   flex-wrap">
+      <div className="mainContainer  md:space-x-10 py-10 flex   flex-wrap">
         <Post
           isTwoPost={true}
           name={data[0].userName}

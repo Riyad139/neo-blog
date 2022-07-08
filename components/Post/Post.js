@@ -4,7 +4,7 @@ import cls from "classnames";
 
 export default function Post(props) {
   const post = " sm:w-[45%] lg:w-[30%]";
-  const twoPost = "sm:w-[45%] m-auto";
+  const twoPost = "sm:w-[45%]";
   return (
     <div className={cls("flex flex-col ", props.isTwoPost ? twoPost : post)}>
       <PostPic profile={props.pic} />
