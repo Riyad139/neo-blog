@@ -10,17 +10,6 @@ import Container from "../../components/Layout/Container";
 import Post from "../../components/Post/Post";
 import dayjs from "dayjs";
 
-// const data = {
-//   userName: "Robin fanando",
-//   userPos: "Front-End Developer",
-//   catagory: "Culture",
-//   date: "july 29,2022",
-//   title: "Defining Pixelmatters team cultural profile key traits",
-//   description:
-//     "During the execution of our Organizational Model project, we felt the need to write down the desired Pixelmatter team cultural profile key traits. And here they are.",
-//   img: "https://uploads-ssl.webflow.com/5f3fdb4ac2968afe2a89c98b/628e11499014ebf21ef801b6_Pixelmatters_natal_2021-15%20(1)-min%202.jpg",
-// };
-
 export default function PostDetails(props) {
   return (
     <>
@@ -105,7 +94,6 @@ export async function getServerSideProps(context) {
   const id = context.params.postId;
   const response = await fetch.default("http://localhost:6565/blog" + "/" + id);
   const data = await response.json();
-  console.log(data.data.article);
   return {
     props: data.data.article, // will be passed to the page component as props
   };

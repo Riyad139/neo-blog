@@ -25,7 +25,12 @@ export default function NavBar() {
               {isOpen ? "close" : "menu"}{" "}
             </span>
           </div>
-          <div className="w-[100vw] left-0 top-0 h-full z-40 flex justify-end   fixed">
+          <div
+            className={cls(
+              !isOpen && "pointer-events-none",
+              "w-[100vw] left-0 top-0 h-full z-40 flex justify-end   fixed"
+            )}
+          >
             <div
               className={cls(
                 " h-full w-full text-2xl  bg-gray-800 duration-300 text-white justify-center items-center relative flex flex-col space-y-6",

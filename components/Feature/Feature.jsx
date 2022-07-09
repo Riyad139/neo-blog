@@ -8,7 +8,7 @@ export default function Feature(props) {
   return (
     <Container>
       <Link href={"/blog/" + props.article._id}>
-        <div className="maindiv md:flex md:space-x-10 pt-16">
+        <div className="maindiv cursor-pointer md:flex md:space-x-10 pt-16">
           <div className="img rounded-sm ">
             <Image
               className="rounded-md  object-cover"
