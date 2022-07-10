@@ -1,9 +1,7 @@
 import { getApps, initializeApp } from "firebase/app";
 
 
-import React, { useRef, useState } from "react";
-import Container from "./../../components/Layout/Container";
-import NavBar from "./../../components/NavBar";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDhKoZPFmIWkADST33k3jsL2YxI8FCpT0I",
