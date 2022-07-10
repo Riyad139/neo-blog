@@ -1,92 +1,88 @@
-import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import React, { useRef, useState } from "react";
 import Container from "./../../components/Layout/Container";
 import NavBar from "./../../components/NavBar";
-import { getApps, initializeApp } from "firebase/app";
 
-import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { nanoid } from "nanoid";
+import { uploader } from "../../components/Admin/FireBaseImageUploader";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDhKoZPFmIWkADST33k3jsL2YxI8FCpT0I",
-  authDomain: "neo-blog-442c7.firebaseapp.com",
-  projectId: "neo-blog-442c7",
-  storageBucket: "neo-blog-442c7.appspot.com",
-  messagingSenderId: "638244507171",
-  appId: "1:638244507171:web:5d4946112acdd2a54a6b96",
-};
-
-export function initFirebase() {
-  const apps = getApps();
-  if (apps.length) return apps[0];
-
-  return initializeApp(firebaseConfig);
-}
-
-export const neoFireBase = initFirebase();
-
-var uploadTask;
-
-export const uploadHandler = (blobInfo, success, failure, progress) => {
-  if (uploadTask) uploadTask.cancel();
-
-  const storageRef = ref(getStorage(neoFireBase), "blog_images/" + nanoid());
-  uploadTask = uploadBytesResumable(storageRef, blobInfo.blob());
-
-  uploadTask.on(
-    "state_changed",
-    (snap) => {
-      progress((snap.bytesTransferred / snap.totalBytes) * 100);
-    },
-
-    (err) => console.error(err),
-
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-        console.log(url);
-        success(url);
-      });
-    }
-  );
-};
-
-const editorObject = {
-  height: 500,
-  menubar: false,
-  plugins:
-    "advlist autolink lists link image charmap searchreplace visualblocks imagetools code insertdatetime media table paste code  wordcount",
-
-  toolbar:
-    " formatselect | " +
-    "bold italic backcolor | alignleft aligncenter " +
-    "alignright alignjustify | bullist numlist outdent indent | " +
-    "image code",
-  content_style:
-    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-  branding: false,
-  images_file_types: "jpg,svg,webp",
-  imagetools_toolbar: "rotateleft rotateright | flipv fliph | imageoptions",
-  images_upload_handler: uploadHandler,
-  automatic_uploads: true,
-  image_advtab: true,
-  image_caption: true,
-};
+import editorObject from "../../components/Admin/BlogHandler";
 
 export default function App() {
+  const [image, setImage] = useState(null);
   const editorRef = useRef(null);
-  const log = () => {
+  const nameRef = useRef(null);
+  const professionRef = useRef(null);
+  const tagRef = useRef(null);
+  const titleRef = useRef(null);
+
+  const log = async () => {
     if (editorRef.current) {
-      console.log(editorRef.current.getContent());
+      console.log(editorRef.current.getContent(), nameRef.current.value);
+      const data = {
+        dummyProfile: {
+          userName: nameRef.current.value,
+          userTitle: professionRef.current.value,
+          ProfilePic:
+            "https://source.unsplash.com/1600x900/?cat,forest,village,water,earth,home,decoration",
+        },
+        title: titleRef.current.value,
+        articleBody: editorRef.current.getContent(),
+        tag: tagRef.current.value,
+        img: await uploader(image),
+      };
+      const res = await fetch("http://127.0.1:6565/blog", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+
+      const result = await res.json();
+      console.log(result);
     }
   };
   return (
     <Container>
       <NavBar />
+      <div>
+        <input
+          ref={nameRef}
+          className="py-2 w-full focus:outline-none text-2xl active:outline-none my-2"
+          placeholder="Your name"
+          type="text"
+        />
+        <input
+          ref={professionRef}
+          className="py-2 w-full focus:outline-none text-2xl active:outline-none my-2"
+          placeholder="your profession"
+          type="text"
+        />
+      </div>
+      <div>
+        <input
+          onChange={(event) => {
+            setImage(event.target.files[0]);
+          }}
+          className="py-2 w-full focus:outline-none text-2xl active:outline-none my-2"
+          placeholder="tags..."
+          type="file"
+        />
+        <input
+          ref={tagRef}
+          className="py-2 w-full focus:outline-none text-2xl active:outline-none my-2"
+          placeholder="tags..."
+          type="text"
+        />
+      </div>
+
       <input
-        className="py-4 w-full focus:outline-none text-2xl active:outline-none my-4"
+        ref={titleRef}
+        className="py-2 w-full focus:outline-none text-2xl active:outline-none my-2"
         placeholder="Enter your blog tittle"
         type="text"
       />
+
       <Editor
         id="daoikjnfosnopginspoirkggnoprg"
         onInit={(evt, editor) => (editorRef.current = editor)}
@@ -94,7 +90,17 @@ export default function App() {
         apiKey="6v58m4mser416pz72ea46257nf48u6gu3y879h4olyt0lho4"
         init={editorObject}
       />
-      <button type=""></button>
+      <div className="my-5 flex space-x-5">
+        <button
+          onClick={log}
+          className="py-2 px-7 hover:bg-slate-800 -translate-y-1 active:translate-y-0 duration-100 text-white rounded-full text-lg bg-slate-900"
+        >
+          save
+        </button>
+        <button className="py-2 px-7 hover:bg-slate-800 -translate-y-1 active:translate-y-0 duration-100 text-white rounded-full text-lg bg-slate-900">
+          update
+        </button>
+      </div>
     </Container>
   );
 }

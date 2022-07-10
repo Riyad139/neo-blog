@@ -8,7 +8,7 @@ import PostContainer from "../../components/Post/PostContainer";
 let article;
 
 const FetchData = async () => {
-  const data = await fetch("http://localhost:6565/blog");
+  const data = await fetch("http://192.168.0.105:6565/blog");
 
   const res = await data.json();
   article = res.data.articles;
