@@ -4,6 +4,10 @@ import UserProfile from "../userProfile/UserProfile";
 import dayjs from "dayjs";
 import Link from "next/link";
 
+function createMarkup(content) {
+  return { __html: content };
+}
+
 export default function Feature(props) {
   return (
     <Container>
@@ -30,8 +34,13 @@ export default function Feature(props) {
             <div className="title text-3xl pt-4 pb-8">
               <h1>{props.article.title}</h1>
             </div>
-            <div className="description text-xl line-clamp-none  md:line-clamp-4 text-gray-700">
-              <h1>{props.article.articleBody}</h1>
+            <div className="description text-xl   md:line-clamp-4 text-gray-700">
+              <h1
+                className="line-clamp-3"
+                dangerouslySetInnerHTML={createMarkup(
+                  props.article.articleBody
+                )}
+              ></h1>
             </div>
             <div className="pt-10">
               <UserProfile

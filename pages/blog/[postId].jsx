@@ -10,6 +10,12 @@ import Container from "../../components/Layout/Container";
 import Post from "../../components/Post/Post";
 import dayjs from "dayjs";
 
+function createMarkup(content) {
+  return { __html: content };
+}
+
+
+
 export default function PostDetails(props) {
   return (
     <>
@@ -34,9 +40,10 @@ export default function PostDetails(props) {
         />
       </div>
       <BlogContainer>
-        <article className=" py-8  prose lg:prose-xl">
-          {props.articleBody}
-        </article>
+        <article
+          className=" py-8  prose lg:prose-xl"
+          dangerouslySetInnerHTML={createMarkup(props.articleBody)}
+        ></article>
         <hr />
         <div className="userProfile flex-col items-center space-y-5 md:space-y-0 md:flex-row py-8 flex justify-between ">
           <UserProfile
