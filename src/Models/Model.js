@@ -20,7 +20,6 @@ const schema = new mongoose.Schema({
   },
   articleBody: {
     type: String,
-    required: [true, "A blog must have a desc"],
     trim: true,
   },
   tag: {

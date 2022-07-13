@@ -1,6 +1,9 @@
 const express = require("express");
 const blog = express.Router();
 const blogController = require("./../controllers/blogController");
+const userController = require("./../controllers/userController");
+blog.route("/login").post(userController.logIn);
+blog.route("/signup").post(userController.signUp);
 
 blog
   .route("/blog")
