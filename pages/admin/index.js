@@ -64,7 +64,7 @@ export default function App() {
               onChange={(event) => {
                 setImage(event.target.files[0]);
               }}
-              className="py-2 w-full focus:outline-none text-lg active:outline-none my-2"
+              className="py-2 w-full   focus:outline-none text-lg active:outline-none my-2"
               placeholder="tags..."
               type="file"
             />
