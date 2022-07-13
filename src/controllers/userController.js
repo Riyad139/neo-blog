@@ -5,11 +5,11 @@ const sendEmail = require("./../utils/sendMail");
 
 const createTokenAndSend = async (id, email) => {
   const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "90d",
+    expiresIn: "30m",
   });
 
   console.log(token);
-  const url = `http://127.0.1:6565/admin/${token}`;
+  const url = `http://192.168.0.105:3000/login/${token}`;
   const text = `use this link to login ${url} (:`;
   const subject = "authentication";
   await sendEmail({
@@ -19,14 +19,54 @@ const createTokenAndSend = async (id, email) => {
   });
 };
 
+exports.verifyLogin = async (req, res, next) => {
+  const token = req.params.token;
+  let id;
+  try {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      id = decoded.id;
+    });
+    const user = await users.findById(id);
+    if (!user) return next(new Error("No user found! fuck off"));
+
+    res.status(200).json({
+      user,
+      token,
+    });
+  } catch (err) {
+    res.status(404).json({
+      message: "fail",
+    });
+  }
+};
+
+exports.isLogin = async (req, res, next) => {
+  const token = req.body.token;
+  let id;
+  try {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      id = decoded.id;
+    });
+    const user = await users.findById(id);
+    if (!user) return next(new Error("No user found! fuck off"));
+    res.status(200).json({
+      user,
+    });
+  } catch (err) {
+    res.status(404).json({
+      message: "fail",
+    });
+  }
+};
+
 exports.logIn = async (req, res, next) => {
   const { email } = req.body;
 
   try {
     zod.string().email().parse(email);
     const currUser = await users.findOne({ email });
-
-    const token = jwt.sign({ id: email }, process.env.JWT_SECRET, {
+    if (!currUser) return new Error("hmmm..,,.");
+    const token = jwt.sign({ id: currUser._id }, process.env.JWT_SECRET, {
       expiresIn: "90d",
     });
 

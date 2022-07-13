@@ -3,6 +3,8 @@ const blog = express.Router();
 const blogController = require("./../controllers/blogController");
 const userController = require("./../controllers/userController");
 blog.route("/login").post(userController.logIn);
+blog.route("/login/:token").post(userController.verifyLogin);
+
 blog.route("/signup").post(userController.signUp);
 
 blog
