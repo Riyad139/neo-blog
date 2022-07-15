@@ -28,7 +28,6 @@ exports.verifyLogin = async (req, res, next) => {
     });
     const user = await users.findById(id);
     if (!user) return next(new Error("No user found! fuck off"));
-
     res.status(200).json({
       user,
       token,
@@ -48,14 +47,11 @@ exports.isLogin = async (req, res, next) => {
       id = decoded.id;
     });
     const user = await users.findById(id);
-    if (!user) return next(new Error("No user found! fuck off"));
-    res.status(200).json({
-      user,
-    });
+    if (!user) throw new Error("No user found! fuck off");
+    req.user = user;
+    next();
   } catch (err) {
-    res.status(404).json({
-      message: "fail",
-    });
+    next(new Error("error"));
   }
 };
 
@@ -65,12 +61,8 @@ exports.logIn = async (req, res, next) => {
   try {
     zod.string().email().parse(email);
     const currUser = await users.findOne({ email });
-    if (!currUser) return new Error("hmmm..,,.");
-    const token = jwt.sign({ id: currUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "90d",
-    });
+    if (!currUser) throw new Error("hmmm..,,.");
 
-    console.log(token);
     await createTokenAndSend(currUser._id, currUser.email);
 
     res.status(200).json({
@@ -106,4 +98,11 @@ exports.signUp = async (req, res, next) => {
     });
     console.log(err);
   }
+};
+
+exports.strictTo = (role) => {
+  return (req, res, next) => {
+    if (req.user.role.includes(role)) return next();
+    return next(new Error("bad request"));
+  };
 };

@@ -10,7 +10,11 @@ blog.route("/signup").post(userController.signUp);
 blog
   .route("/blog")
   .get(blogController.getAllBlogs)
-  .post(blogController.createArticle);
+  .post(
+    userController.isLogin,
+    userController.strictTo("admin"),
+    blogController.createArticle
+  );
 
 blog
   .route("/blog/:Id")
