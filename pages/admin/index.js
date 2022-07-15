@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Container from "../../components/Layout/Container";
 import NavBar from "../../components/NavBar";
 
@@ -14,19 +14,35 @@ export default function App() {
   const titleRef = useRef(null);
   const route = useRouter();
 
+  useEffect(() => {
+    if (!localStorage.getItem("token"))
+      route.replace("http://127.0.1:3000/login");
+    const token = JSON.parse(localStorage.getItem("token"));
+    fetch("http://192.168.0.105:6565/login/" + token, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+    }).then((res) => {
+      if (res.status !== 200) route.replace("http://127.0.1:3000/login");
+    });
+  }, []);
+
   const log = async () => {
+    const token = JSON.parse(localStorage.getItem("token"));
     const data = {
       dummyProfile: {
         userName: nameRef.current.value,
         userTitle: professionRef.current.value,
-        ProfilePic:
-          "https://source.unsplash.com/1600x900/?cat,forest,village,water,earth,home,decoration",
+        ProfilePic: "https://source.unsplash.com/1600x900/?avatar",
       },
       title: titleRef.current.value,
       articleBody: "",
       tag: tagRef.current.value,
       img: await uploader(image),
+      token,
     };
+
     const res = await fetch("http://127.0.1:6565/blog", {
       method: "POST",
       body: JSON.stringify(data),
@@ -34,9 +50,10 @@ export default function App() {
         "content-type": "application/json",
       },
     });
+    console.log(res);
+    if (!res.ok) return alert("you are not admin fak off");
 
     const result = await res.json();
-    console.log(result.article._id);
     route.push("http://127.0.1:3000/admin/" + result.article._id);
   };
 
