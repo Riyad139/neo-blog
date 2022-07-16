@@ -17,7 +17,7 @@ export default function LogIn() {
       },
     });
     if (!res.ok) alert("use right email bro ......");
-    console.log(res);
+    else alert("email send successfully");
   };
 
   return (

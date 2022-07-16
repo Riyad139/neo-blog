@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Container from "../../components/Layout/Container";
 import NavBar from "../../components/NavBar";
-
+import { CgSpinner } from "react-icons/cg";
 import { uploader } from "../../components/Admin/FireBaseImageUploader";
 import BlogContainer from "../../components/Layout/BlogContainer";
 import { useRouter } from "next/router";
@@ -13,6 +13,7 @@ export default function App() {
   const tagRef = useRef(null);
   const titleRef = useRef(null);
   const route = useRouter();
+  const [isAuth, setAuth] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem("token"))
@@ -26,6 +27,7 @@ export default function App() {
     }).then((res) => {
       if (res.status !== 200) route.replace("http://127.0.1:3000/login");
     });
+    setAuth(true);
   }, []);
 
   const log = async () => {
@@ -55,7 +57,14 @@ export default function App() {
 
     const result = await res.json();
     route.push("http://127.0.1:3000/admin/" + result.article._id);
+    
   };
+  if (!isAuth)
+    return (
+      <div className="w-full flex justify-center items-center  h-[100vh]">
+        <CgSpinner size={40} className="animate-spin" />
+      </div>
+    );
 
   return (
     <Container>
